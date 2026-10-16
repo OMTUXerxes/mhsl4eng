@@ -21,7 +21,8 @@ git clone https://github.com/OMTUXerxes/mhsl4eng.git (Join-Path $skillBase 'mhsl
 ## 使用示例
 
 - `学生把 hope 拼成 hop，请出 10 道针对性练习。`
-- `学生把 night 拼成 nigt，我判断他对 -ight 的字母组合和读音对应还不熟。请给完整单词拼写练习，并列出同类词。`
+- `学生把 light 拼成 lait，我判断他没掌握 -ight 的读音。请给 l____ 这类拼写练习，并列出同类词。`
+- `学生把 waste 拼成 wast，请给 w---- 这类练习，让他练 aste，并用 paste、haste 对照。`
 - `学生写了 He like apples.，原句应为 He likes apples.，请出 5 道题。`
 - `学生在这里漏写 the。请根据这张试卷照片出题。`
 
