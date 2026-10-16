@@ -7,9 +7,10 @@ from pathlib import Path
 
 ITEM = re.compile(r"^\s*(\d+)[.．、]\s*(\S.*)$")
 SECTION = re.compile(r"^第[一二三四五六七八九十]+部分：")
+WORD_GROUP = re.compile(r"^同类词(?:（[^）]+）)?：\s*(\S.*)$")
 
 
-def validate(text: str, expected_count: int = 10) -> list[str]:
+def validate(text: str, expected_count: int = 10, phonics: bool = False) -> list[str]:
     lines = [line.strip() for line in text.splitlines()]
     errors = []
     markers = [
@@ -59,6 +60,10 @@ def validate(text: str, expected_count: int = 10) -> list[str]:
     classified = basic_numbers + advanced_numbers
     if len(classified) != len(set(classified)) or sorted(classified) != expected:
         errors.append("基础题和进阶题的题号应各出现一次，并覆盖所有题目")
+    if phonics:
+        word_groups = [i for i, line in enumerate(lines) if WORD_GROUP.match(line)]
+        if len(word_groups) != 1 or not advanced < word_groups[0] < answers:
+            errors.append("音形对应练习应在难度题号后、参考答案前列出一行同类词")
     return errors
 
 
@@ -66,6 +71,7 @@ def main() -> int:
     parser = argparse.ArgumentParser(description=__doc__)
     parser.add_argument("file", type=Path, help="UTF-8 练习文本文件")
     parser.add_argument("--count", type=int, default=10, help="预期题数，默认 10")
+    parser.add_argument("--phonics", action="store_true", help="检查音形对应练习是否列出同类词")
     args = parser.parse_args()
     if args.count < 1:
         parser.error("--count 必须大于 0")
@@ -73,7 +79,7 @@ def main() -> int:
         content = args.file.read_text(encoding="utf-8")
     except OSError as exc:
         parser.error(str(exc))
-    problems = validate(content, args.count)
+    problems = validate(content, args.count, args.phonics)
     if problems:
         for problem in problems:
             print(f"未通过：{problem}")

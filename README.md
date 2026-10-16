@@ -21,6 +21,7 @@ git clone https://github.com/OMTUXerxes/mhsl4eng.git (Join-Path $skillBase 'mhsl
 ## 使用示例
 
 - `学生把 hope 拼成 hop，请出 10 道针对性练习。`
+- `学生把 night 拼成 nigt，我判断他对 -ight 的字母组合和读音对应还不熟。请给完整单词拼写练习，并列出同类词。`
 - `学生写了 He like apples.，原句应为 He likes apples.，请出 5 道题。`
 - `学生在这里漏写 the。请根据这张试卷照片出题。`
 
@@ -38,6 +39,8 @@ git clone https://github.com/OMTUXerxes/mhsl4eng.git (Join-Path $skillBase 'mhsl
 ```powershell
 python scripts/validate_exercises.py exercise.txt --count 10
 ```
+
+音形对应练习再加 `--phonics`，检查是否单独列出同类词。
 
 脚本只检查能程序化判断的格式；错因、题目和答案仍需逐题核对。
 
